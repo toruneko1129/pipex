@@ -6,13 +6,14 @@
 #    By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/24 17:06:15 by hkawakit          #+#    #+#              #
-#    Updated: 2021/09/24 17:06:19 by hkawakit         ###   ########.fr        #
+#    Updated: 2021/09/24 18:10:47 by hkawakit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	pipex
 SRCDIR	=	./srcs
-SRCLIST	=	main.c
+SRCLIST	=	main.c \
+			error.c
 SRCS	=	$(addprefix $(SRCDIR)/, $(SRCLIST))
 OBJDIR	=	./objs
 OBJS	=	$(SRCLIST:%.c=$(OBJDIR)/%.o)
