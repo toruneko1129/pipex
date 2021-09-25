@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:54:22 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/09/25 01:30:52 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/09/25 17:23:40 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,29 @@ static char	**get_path_from_envp(char **envp)
 	return (path);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	pipex(int depth, int argc, char **argv, char **envp)
 {
 	char	**path;
 
-	check_args(argc);
 	path = get_path_from_envp(envp);
-	//garbage
-	if (argv[0])
-		;
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	pid_t	res;
+
+	check_args(argc);
+	errno = 0;
+	res = fork();
+	if (res == -1)
+		perror_exit("fork");
+	else if (res == 0)
+		pipex(argc - 3, argv, envp);
+	else
+	{
+		errno = 0;
+		if (wait(NULL) == -1)
+			perror_exit("wait");
+	}
 	return (0);
 }
