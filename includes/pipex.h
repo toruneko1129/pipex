@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:55:57 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/09/25 01:21:04 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/09/28 01:51:57 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@
 //error.c
 void	arg_error(void);
 void	perror_exit(const char *s);
+
+//command.c
+char	*get_pathname(char *cmd, char **envp);
+
+//utils.c
+void	free_2darray(char **arr);
 
 #endif
