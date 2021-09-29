@@ -12,6 +12,17 @@
 
 #include "pipex.h"
 
+char	**get_cmds_from_argv(char *str)
+{
+	char	**cmds;
+
+	errno = 0;
+	cmds = ft_split(str, ' ');
+	if (cmds == NULL)
+		perror_exit("get_cmds_from_argv", EXIT_FAILURE);
+	return (cmds);
+}
+
 static char	**get_path_from_envp(char **envp)
 {
 	char	**path;
@@ -23,8 +34,26 @@ static char	**get_path_from_envp(char **envp)
 	errno = 0;
 	path = ft_split(envp[i] + 5, ':');
 	if (path == NULL)
-		perror_exit("ft_split");
+		perror_exit("get_path_from_envp", EXIT_FAILURE);
 	return (path);
+}
+
+static void	create_pathname(char *cmd, char **path, char **pathname, size_t i)
+{
+	const size_t	dstsize = ft_strlen(path[i]) + ft_strlen(cmd) + 2;
+
+	if (*pathname != NULL)
+		free(*pathname);
+	errno = 0;
+	*pathname = (char *)malloc(dstsize * sizeof(char));
+	if (*pathname == NULL)
+	{
+		free_2darray(path);
+		perror_exit("create_pathname", EXIT_FAILURE);
+	}
+	ft_strlcpy(*pathname, path[i], dstsize);
+	ft_strlcat(*pathname, "/", dstsize);
+	ft_strlcat(*pathname, cmd, dstsize);
 }
 
 char	*get_pathname(char *cmd, char **envp)
@@ -34,14 +63,22 @@ char	*get_pathname(char *cmd, char **envp)
 	size_t	i;
 
 	path = get_path_from_envp(envp);
+	pathname = NULL;
 	i = 0;
-	printf("%s\n", cmd);
 	while (path[i] != NULL)
 	{
-		printf("%s\n", path[i]);
-		++i;
+		create_pathname(cmd, path, &pathname, i++);
+		if (access(pathname, F_OK) == 0)
+		{
+			free_2darray(path);
+			return (pathname);
+		}
 	}
 	free_2darray(path);
-	pathname = NULL;
+	free(pathname);
+	errno = 0;
+	pathname = ft_strdup(cmd);
+	if (pathname == NULL)
+		perror_exit("get_pathname", EXIT_FAILURE);
 	return (pathname);
 }

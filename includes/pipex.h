@@ -33,9 +33,10 @@
 
 //error.c
 void	arg_error(void);
-void	perror_exit(const char *s);
+void	perror_exit(const char *s, int status);
 
 //command.c
+char	**get_cmds_from_argv(char *str);
 char	*get_pathname(char *cmd, char **envp);
 
 //utils.c

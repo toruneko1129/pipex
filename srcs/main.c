@@ -20,13 +20,17 @@ static void	check_args(int argc)
 
 static void	pipex(int depth, int argc, char **argv, char **envp)
 {
+	char	**cmds;
 	char	*pathname;
 
-	pathname = get_pathname(argv[depth + 2], envp);
+	cmds = get_cmds_from_argv(argv[depth + 2]);
+	pathname = get_pathname(cmds[0], envp);
 	if (depth == 0)
 		;
 	else
 		pipex(depth - 1, argc, argv, envp);
+	free_2darray(cmds);
+	free(pathname);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -37,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	errno = 0;
 	res = fork();
 	if (res == -1)
-		perror_exit("fork");
+		perror_exit("fork", EXIT_FAILURE);
 	else if (res == 0)
 		pipex(argc - 4, argc, argv, envp);
 	else

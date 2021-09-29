@@ -19,8 +19,8 @@ void	arg_error(void)
 	exit(EXIT_FAILURE);
 }
 
-void	perror_exit(const char *s)
+void	perror_exit(const char *s, int status)
 {
 	perror(s);
-	exit(EXIT_FAILURE);
+	exit(status);
 }
