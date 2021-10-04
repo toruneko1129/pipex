@@ -27,17 +27,21 @@
 # define STDOUT 1
 # define STDERR 2
 
+//pipe
+# define READ 0
+# define WRITE 1
+
 //error message
 # define ERROR "Error"
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
 
 //error.c
-void	arg_error(void);
+void	arg_error_exit(void);
 void	perror_exit(const char *s, int status);
+void	putbash_perror_exit(const char *s, int status);
 
 //command.c
-char	**get_cmds_from_argv(char *str);
-char	*get_pathname(char *cmd, char **envp);
+char	*get_pathname(char **cmds, char **envp);
 
 //utils.c
 void	free_2darray(char **arr);

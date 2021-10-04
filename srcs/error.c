@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void	arg_error(void)
+void	arg_error_exit(void)
 {
 	ft_putendl_fd(ERROR, STDERR);
 	ft_putendl_fd(USAGE, STDERR);
@@ -23,4 +23,10 @@ void	perror_exit(const char *s, int status)
 {
 	perror(s);
 	exit(status);
+}
+
+void	putbash_perror_exit(const char *s, int status)
+{
+	ft_putstr_fd("bash: ", STDERR);
+	perror_exit(s, status);
 }
