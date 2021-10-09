@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:55:57 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/09/28 01:51:57 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/09 20:06:39 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 # define ERROR "Error"
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
 
-typedef enum	e_fd
+typedef enum e_fd
 {
 	STDIN,
 	STDOUT,
 	STDERR
 }	t_fd;
 
-typedef enum	e_pipe
+typedef enum e_pipe
 {
 	READ,
 	WRITE

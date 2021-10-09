@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 01:45:55 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/09/28 02:08:05 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/09 20:06:06 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_pathname(char **cmds, char **envp)
 }
 */
 
-static char *create_cmd_pathname(const char *const cmd,
+static char	*create_cmd_pathname(const char *const cmd,
 	const char *const path)
 {
 	char	*pathname;
