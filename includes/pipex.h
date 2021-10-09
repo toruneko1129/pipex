@@ -37,11 +37,11 @@
 
 //error.c
 void	arg_error_exit(void);
-void	perror_exit(const char *s, int status);
-void	putbash_perror_exit(const char *s, int status);
+void	perror_exit(const char *const msg, int status);
+void	putbash_perror_exit(const char *const msg, int status);
 
 //command.c
-char	*get_pathname(const char **const envp, const char *const cmd);
+char	*get_cmd_pathname(char **const envp, const char *const cmd);
 
 //utils.c
 void	free_2darray(char **arr);

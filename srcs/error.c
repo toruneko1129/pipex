@@ -19,14 +19,14 @@ void	arg_error_exit(void)
 	exit(EXIT_FAILURE);
 }
 
-void	perror_exit(const char *s, int status)
+void	perror_exit(const char *const msg, int status)
 {
-	perror(s);
+	perror(msg);
 	exit(status);
 }
 
-void	putbash_perror_exit(const char *s, int status)
+void	putbash_perror_exit(const char *const msg, int status)
 {
 	ft_putstr_fd("bash: ", STDERR);
-	perror_exit(s, status);
+	perror_exit(msg, status);
 }

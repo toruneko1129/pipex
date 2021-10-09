@@ -12,7 +12,8 @@
 
 #include "pipex.h"
 
-static char	**get_pathlist_from_envp(const char **const envp)
+//return NULL if allocation failed
+static char	**get_pathlist_from_envp(char **const envp)
 {
 	char	**pathlist;
 	size_t	i;
@@ -72,13 +73,45 @@ char	*get_pathname(char **cmds, char **envp)
 }
 */
 
-char	*get_pathname(const char **const envp, const char *const cmd)
+static char *create_cmd_pathname(const char *const cmd,
+	const char *const path)
+{
+	char	*pathname;
+	size_t	dstsize;
+
+	errno = 0;
+	if (path == NULL)
+		return (ft_strdup(cmd));
+	dstsize = ft_strlen(path) + ft_strlen(cmd) + 2;
+	pathname = (char *)malloc(dstsize * sizeof(char));
+	if (pathname == NULL)
+		return (NULL);
+	ft_strlcpy(pathname, path, dstsize);
+	ft_strlcat(pathname, "/", dstsize);
+	ft_strlcat(pathname, cmd, dstsize);
+	return (pathname);
+}
+
+//return NULL if allocation failed
+char	*get_cmd_pathname(char **const envp, const char *const cmd)
 {
 	char	**pathlist;
+	char	*pathname;
+	size_t	i;
 
 	pathlist = get_pathlist_from_envp(envp);
 	if (pathlist == NULL)
 		return (NULL);
-	(void)cmd;
-	return (NULL);
+	i = 0;
+	while (1)
+	{
+		pathname = create_cmd_pathname(cmd, pathlist[i]);
+		if (pathlist[i] == NULL || access(pathname, F_OK) == 0)
+		{
+			free_2darray(pathlist);
+			return (pathname);
+		}
+		++i;
+		free(pathname);
+	}
 }

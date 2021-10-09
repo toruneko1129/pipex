@@ -12,14 +12,20 @@
 
 #include "pipex.h"
 
-static void	check_args(int argc)
+static void	check_args(const int argc)
 {
 	if (argc != 5)
 		arg_error_exit();
 }
 
+static void	parent_section(const int *const pipefd)
+{
+	close(pipefd[WRITE]);
+	close(pipefd[READ]);
+}
+
 static void	input_section(const char *const infile, const char *const cmd,
-	const char **const envp, const int *const pipefd)
+	char **const envp, const int *const pipefd)
 {
 	const int		infilefd = open(infile, O_RDONLY);
 	char			**cmdarray;
@@ -36,12 +42,24 @@ static void	input_section(const char *const infile, const char *const cmd,
 	cmdarray = ft_split(cmd, ' ');
 	if (cmdarray == NULL)
 		perror_exit("ft_split", EXIT_FAILURE);
-	pathname = get_pathname(envp, cmdarray[0]);
+	pathname = get_cmd_pathname(envp, cmdarray[0]);
 	if (pathname == NULL)
+	{
+		free_2darray(cmdarray);
 		perror_exit("get_pathname", EXIT_FAILURE);
+	}
+	errno = 0;
+	if (execve(pathname, cmdarray, envp) == -1)
+	{
+		free_2darray(cmdarray);
+		ft_putstr_fd("bash: ", STDERR);
+		perror(pathname);
+		free(pathname);
+		exit(EXIT_FAILURE);
+	}
 }
 
-static void	pipex(const char **const argv, const char **const envp,
+static void	pipex(const char **const argv, char **const envp,
 	const int *pipefd)
 {
 	pid_t	pid;
@@ -61,15 +79,11 @@ static void	pipex(const char **const argv, const char **const envp,
 				input_section(argv[1], argv[2], envp, pipefd);
 		}
 		else
-		{
-			close(pipefd[WRITE]);
-			dup2(pipefd[READ], STDIN);
-			close(pipefd[READ]);
-		}
+			parent_section(pipefd);
 	}
 }
 
-int	main(int argc, const char **const argv, const char **const envp)
+int	main(int argc, const char **const argv, char **const envp)
 {
 	int		pipefd[2];
 	int		child_process_cnt;
