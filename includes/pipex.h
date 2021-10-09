@@ -41,7 +41,7 @@ void	perror_exit(const char *s, int status);
 void	putbash_perror_exit(const char *s, int status);
 
 //command.c
-char	*get_pathname(char **cmds, char **envp);
+char	*get_pathname(const char **const envp, const char *const cmd);
 
 //utils.c
 void	free_2darray(char **arr);

@@ -12,19 +12,20 @@
 
 #include "pipex.h"
 
-static char	**get_path_from_envp(char **envp)
+static char	**get_pathlist_from_envp(const char **const envp)
 {
-	char	**path;
+	char	**pathlist;
 	size_t	i;
 
 	i = 0;
 	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5))
 		++i;
 	errno = 0;
-	path = ft_split(envp[i] + 5, ':');
-	return (path);
+	pathlist = ft_split(envp[i] + 5, ':');
+	return (pathlist);
 }
 
+/*
 static void	create_pathname(char *cmd, char **path, char **pathname, size_t i)
 {
 	const size_t	dstsize = ft_strlen(path[i]) + ft_strlen(cmd) + 2;
@@ -68,4 +69,16 @@ char	*get_pathname(char **cmds, char **envp)
 	}
 	free_2darray(path);
 	return (pathname);
+}
+*/
+
+char	*get_pathname(const char **const envp, const char *const cmd)
+{
+	char	**pathlist;
+
+	pathlist = get_pathlist_from_envp(envp);
+	if (pathlist == NULL)
+		return (NULL);
+	(void)cmd;
+	return (NULL);
 }
