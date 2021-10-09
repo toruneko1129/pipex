@@ -21,10 +21,12 @@
 # include <sys/errno.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/stat.h>
 
 //error message
 # define ERROR "Error"
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
+# define BASH "bash: "
 # define CMD_NOT_FOUND_MSG ": command not found"
 
 typedef enum e_fd
@@ -52,6 +54,8 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd);
 //process.c
 void	parent_section(const int *const pipefd);
 void	input_section(const char *const infile, const char *const cmd,
+	char **const envp, const int *const pipefd);
+void	output_section(const char *const outfile, const char *const cmd,
 	char **const envp, const int *const pipefd);
 
 //error.c

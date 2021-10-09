@@ -27,7 +27,7 @@ void	perror_exit(const char *const msg, int status)
 
 void	putbash_perror_exit(const char *const msg, int status)
 {
-	ft_putstr_fd("bash: ", STDERR);
+	ft_putstr_fd(BASH, STDERR);
 	perror_exit(msg, status);
 }
 
@@ -47,7 +47,7 @@ void	execve_error_exit(char **cmdarray, char *pathname)
 	}
 	else
 	{
-		ft_putstr_fd("bash: ", STDERR);
+		ft_putstr_fd(BASH, STDERR);
 		perror(pathname);
 	}
 	free_2darray(cmdarray);

@@ -3,3 +3,4 @@ pipex
 */*.a
 *.dSYM/*
 infile
+outfile

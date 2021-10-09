@@ -35,12 +35,18 @@ void	input_section(const char *const infile, const char *const cmd,
 		execve_error_exit(cmdarray, pathname);
 }
 
-/*
 void	output_section(const char *const outfile, const char *const cmd,
 	char **const envp, const int *const pipefd)
 {
-	const int		outfilefd = open(outfile, O_RDONLY);
+	const int		outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
+		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
 	char			**cmdarray;
 	char			*pathname;
+
+	close(pipefd[READ]);
+	close(pipefd[WRITE]);
+	if (outfilefd == -1)
+		exit(2);
+	dup2(outfilefd, STDOUT);
+	close(outfilefd);
 }
-*/

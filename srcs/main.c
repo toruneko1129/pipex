@@ -25,8 +25,7 @@ static void	pipex(const char **const argv, char **const envp,
 	int		child_process_cnt;
 
 	child_process_cnt = 0;
-	//while (++child_process_cnt <= 2)
-	while (++child_process_cnt <= 1)
+	while (++child_process_cnt <= 2)
 	{
 		errno = 0;
 		pid = fork();
@@ -36,6 +35,8 @@ static void	pipex(const char **const argv, char **const envp,
 		{
 			if (child_process_cnt == 1)
 				input_section(argv[1], argv[2], envp, pipefd);
+			else
+				output_section(argv[4], argv[3], envp, pipefd);
 		}
 		else
 			parent_section(pipefd);
@@ -53,8 +54,7 @@ int	main(const int argc, const char **const argv, char **const envp)
 	if (pipe(pipefd) == -1)
 		perror_exit("pipe", EXIT_FAILURE);
 	pipex(argv, envp, pipefd);
-	//child_process_cnt = 2;
-	child_process_cnt = 1;
+	child_process_cnt = 2;
 	while (child_process_cnt--)
 		wait(&exit_status);
 	exit(WEXITSTATUS(exit_status));
