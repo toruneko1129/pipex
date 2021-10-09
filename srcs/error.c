@@ -30,3 +30,14 @@ void	putbash_perror_exit(const char *const msg, int status)
 	ft_putstr_fd("bash: ", STDERR);
 	perror_exit(msg, status);
 }
+
+void	execve_error_exit(char **cmdarray, char *pathname)
+{
+	free_2darray(cmdarray);
+	ft_putstr_fd("bash: ", STDERR);
+	perror(pathname);
+	free(pathname);
+	if (errno == ENOENT)
+		exit(CMD_NOT_FOUND);
+	exit(EXIT_FAILURE);
+}

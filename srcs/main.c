@@ -50,13 +50,7 @@ static void	input_section(const char *const infile, const char *const cmd,
 	}
 	errno = 0;
 	if (execve(pathname, cmdarray, envp) == -1)
-	{
-		free_2darray(cmdarray);
-		ft_putstr_fd("bash: ", STDERR);
-		perror(pathname);
-		free(pathname);
-		exit(EXIT_FAILURE);
-	}
+		execve_error_exit(cmdarray, pathname);
 }
 
 static void	pipex(const char **const argv, char **const envp,
@@ -87,14 +81,16 @@ int	main(int argc, const char **const argv, char **const envp)
 {
 	int		pipefd[2];
 	int		child_process_cnt;
+	int		exit_status;
 
 	check_args(argc);
 	errno = 0;
 	if (pipe(pipefd) == -1)
 		perror_exit("pipe", EXIT_FAILURE);
-	child_process_cnt = 2;
 	pipex(argv, envp, pipefd);
+	//child_process_cnt = 2;
+	child_process_cnt = 1;
 	while (child_process_cnt--)
-		wait(NULL);
-	return (0);
+		wait(&exit_status);
+	exit(exit_status);
 }

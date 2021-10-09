@@ -39,10 +39,16 @@ typedef enum e_pipe
 	WRITE
 }	t_pipe;
 
+typedef enum e_exit_status
+{
+	CMD_NOT_FOUND = 127
+}	t_exit_status;
+
 //error.c
 void	arg_error_exit(void);
 void	perror_exit(const char *const msg, int status);
 void	putbash_perror_exit(const char *const msg, int status);
+void	execve_error_exit(char **cmdarray, char *pathname);
 
 //command.c
 char	*get_cmd_pathname(char **const envp, const char *const cmd);
