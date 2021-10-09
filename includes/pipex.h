@@ -22,18 +22,22 @@
 # include <stdio.h>
 # include <string.h>
 
-//file descriptor
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
-
-//pipe
-# define READ 0
-# define WRITE 1
-
 //error message
 # define ERROR "Error"
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
+
+typedef enum	e_fd
+{
+	STDIN,
+	STDOUT,
+	STDERR
+}	t_fd;
+
+typedef enum	e_pipe
+{
+	READ,
+	WRITE
+}	t_pipe;
 
 //error.c
 void	arg_error_exit(void);
