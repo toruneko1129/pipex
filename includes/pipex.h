@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:55:57 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/09 20:06:39 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/10 02:10:14 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd);
 //process.c
 void	parent_section(const int *const pipefd);
 void	input_section(const char *const infile, const char *const cmd,
-	char **const envp, const int *const pipefd);
+			char **const envp, const int *const pipefd);
 void	output_section(const char *const outfile, const char *const cmd,
-	char **const envp, const int *const pipefd);
+			char **const envp, const int *const pipefd);
 
 //error.c
 void	arg_error_exit(void);
