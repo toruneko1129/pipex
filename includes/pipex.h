@@ -25,6 +25,7 @@
 //error message
 # define ERROR "Error"
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
+# define CMD_NOT_FOUND_MSG ": command not found"
 
 typedef enum e_fd
 {
@@ -41,17 +42,23 @@ typedef enum e_pipe
 
 typedef enum e_exit_status
 {
-	CMD_NOT_FOUND = 127
+	PERMISSION_DENIED = 126,
+	CMD_NOT_FOUND
 }	t_exit_status;
+
+//command.c
+char	*get_cmd_pathname(char **const envp, const char *const cmd);
+
+//process.c
+void	parent_section(const int *const pipefd);
+void	input_section(const char *const infile, const char *const cmd,
+	char **const envp, const int *const pipefd);
 
 //error.c
 void	arg_error_exit(void);
 void	perror_exit(const char *const msg, int status);
 void	putbash_perror_exit(const char *const msg, int status);
 void	execve_error_exit(char **cmdarray, char *pathname);
-
-//command.c
-char	*get_cmd_pathname(char **const envp, const char *const cmd);
 
 //utils.c
 void	free_2darray(char **arr);

@@ -33,11 +33,24 @@ void	putbash_perror_exit(const char *const msg, int status)
 
 void	execve_error_exit(char **cmdarray, char *pathname)
 {
+	int		exit_status;
+
+	exit_status = EXIT_FAILURE;
+	if (!pathname[0])
+		exit_status = CMD_NOT_FOUND;
+	else if (access(pathname, X_OK) == -1)
+		exit_status = PERMISSION_DENIED;
+	if (exit_status == CMD_NOT_FOUND)
+	{
+		ft_putstr_fd(cmdarray[0], STDERR);
+		ft_putendl_fd(CMD_NOT_FOUND_MSG, STDERR);
+	}
+	else
+	{
+		ft_putstr_fd("bash: ", STDERR);
+		perror(pathname);
+	}
 	free_2darray(cmdarray);
-	ft_putstr_fd("bash: ", STDERR);
-	perror(pathname);
 	free(pathname);
-	if (errno == ENOENT)
-		exit(CMD_NOT_FOUND);
-	exit(EXIT_FAILURE);
+	exit(exit_status);
 }

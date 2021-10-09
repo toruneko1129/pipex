@@ -26,53 +26,6 @@ static char	**get_pathlist_from_envp(char **const envp)
 	return (pathlist);
 }
 
-/*
-static void	create_pathname(char *cmd, char **path, char **pathname, size_t i)
-{
-	const size_t	dstsize = ft_strlen(path[i]) + ft_strlen(cmd) + 2;
-
-	if (*pathname != NULL)
-		free(*pathname);
-	errno = 0;
-	*pathname = (char *)malloc(dstsize * sizeof(char));
-	if (*pathname == NULL)
-	{
-		free_2darray(path);
-		perror_exit("create_pathname", EXIT_FAILURE);
-	}
-	ft_strlcpy(*pathname, path[i], dstsize);
-	ft_strlcat(*pathname, "/", dstsize);
-	ft_strlcat(*pathname, cmd, dstsize);
-}
-
-char	*get_pathname(char **cmds, char **envp)
-{
-	char	**path;
-	char	*pathname;
-	size_t	i;
-
-	path = get_path_from_envp(envp);
-	if (path == NULL)
-	{
-		free_2darray(cmds);
-		perror_exit("ft_split", EXIT_FAILURE);
-	}
-	pathname = NULL;
-	i = 0;
-	while (path[i] != NULL)
-	{
-		create_pathname(cmds[0], path, &pathname, i++);
-		if (access(pathname, F_OK) == 0)
-		{
-			free_2darray(path);
-			return (pathname);
-		}
-	}
-	free_2darray(path);
-	return (pathname);
-}
-*/
-
 static char	*create_cmd_pathname(const char *const cmd,
 	const char *const path)
 {
@@ -81,7 +34,7 @@ static char	*create_cmd_pathname(const char *const cmd,
 
 	errno = 0;
 	if (path == NULL)
-		return (ft_strdup(cmd));
+		return (ft_strdup(""));
 	dstsize = ft_strlen(path) + ft_strlen(cmd) + 2;
 	pathname = (char *)malloc(dstsize * sizeof(char));
 	if (pathname == NULL)

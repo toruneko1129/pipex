@@ -14,6 +14,7 @@ NAME	=	pipex
 SRCDIR	=	./srcs
 SRCLIST	=	main.c \
 			command.c \
+			process.c \
 			error.c \
 			utils.c
 SRCS	=	$(addprefix $(SRCDIR)/, $(SRCLIST))

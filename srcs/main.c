@@ -18,41 +18,6 @@ static void	check_args(const int argc)
 		arg_error_exit();
 }
 
-static void	parent_section(const int *const pipefd)
-{
-	close(pipefd[WRITE]);
-	close(pipefd[READ]);
-}
-
-static void	input_section(const char *const infile, const char *const cmd,
-	char **const envp, const int *const pipefd)
-{
-	const int		infilefd = open(infile, O_RDONLY);
-	char			**cmdarray;
-	char			*pathname;
-
-	close(pipefd[READ]);
-	dup2(pipefd[WRITE], STDOUT);
-	close(pipefd[WRITE]);
-	if (infilefd == -1)
-		putbash_perror_exit(infile, EXIT_FAILURE);
-	dup2(infilefd, STDIN);
-	close(infilefd);
-	errno = 0;
-	cmdarray = ft_split(cmd, ' ');
-	if (cmdarray == NULL)
-		perror_exit("ft_split", EXIT_FAILURE);
-	pathname = get_cmd_pathname(envp, cmdarray[0]);
-	if (pathname == NULL)
-	{
-		free_2darray(cmdarray);
-		perror_exit("get_pathname", EXIT_FAILURE);
-	}
-	errno = 0;
-	if (execve(pathname, cmdarray, envp) == -1)
-		execve_error_exit(cmdarray, pathname);
-}
-
 static void	pipex(const char **const argv, char **const envp,
 	const int *pipefd)
 {
@@ -77,7 +42,7 @@ static void	pipex(const char **const argv, char **const envp,
 	}
 }
 
-int	main(int argc, const char **const argv, char **const envp)
+int	main(const int argc, const char **const argv, char **const envp)
 {
 	int		pipefd[2];
 	int		child_process_cnt;
@@ -92,5 +57,5 @@ int	main(int argc, const char **const argv, char **const envp)
 	child_process_cnt = 1;
 	while (child_process_cnt--)
 		wait(&exit_status);
-	exit(exit_status);
+	exit(WEXITSTATUS(exit_status));
 }
