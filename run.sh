@@ -1,0 +1,2 @@
+make
+./pipex || echo $?

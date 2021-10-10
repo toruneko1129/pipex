@@ -12,11 +12,14 @@
 
 #include "pipex.h"
 
-void	parent_section(const int *const pipefd)
+void	parent_section(const int *const pipefd,
+	pid_t *const child_pid_array, const int child_process_cnt,
+	const int current_pid)
 {
 	close(pipefd[WRITE]);
 	dup2(pipefd[READ], STDIN);
 	close(pipefd[READ]);
+	child_pid_array[child_process_cnt - 1] = current_pid;
 }
 
 void	input_section(const char *const infile, const char *const cmd,
