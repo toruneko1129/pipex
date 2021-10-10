@@ -15,6 +15,7 @@
 void	parent_section(const int *const pipefd)
 {
 	close(pipefd[WRITE]);
+	dup2(pipefd[READ], STDIN);
 	close(pipefd[READ]);
 }
 
@@ -58,7 +59,20 @@ void	output_section(const char *const outfile, const char *const cmd,
 	close(pipefd[READ]);
 	close(pipefd[WRITE]);
 	if (outfilefd == -1)
-		exit(2);
+		putbash_perror_exit(outfile, EXIT_FAILURE);
 	dup2(outfilefd, STDOUT);
 	close(outfilefd);
+	errno = 0;
+	cmdarray = ft_split(cmd, ' ');
+	if (cmdarray == NULL)
+		perror_exit("ft_split", EXIT_FAILURE);
+	pathname = get_cmd_pathname(envp, cmdarray[0]);
+	if (pathname == NULL)
+	{
+		free_2darray(cmdarray);
+		perror_exit("get_pathname", EXIT_FAILURE);
+	}
+	errno = 0;
+	if (execve(pathname, cmdarray, envp) == -1)
+		execve_error_exit(cmdarray, pathname);
 }

@@ -18,9 +18,9 @@ static void	check_args(const int argc)
 		arg_error_exit();
 }
 
-static void	pipex(const char **const argv, char **const envp,
-	const int *pipefd)
+static void	pipex(const char **const argv, char **const envp)
 {
+	int		pipefd[2];
 	pid_t	pid;
 	int		child_process_cnt;
 
@@ -28,6 +28,8 @@ static void	pipex(const char **const argv, char **const envp,
 	while (++child_process_cnt <= 2)
 	{
 		errno = 0;
+		if (pipe(pipefd) == -1)
+			perror_exit("pipe", EXIT_FAILURE);
 		pid = fork();
 		if (pid == -1)
 			perror_exit("fork", EXIT_FAILURE);
@@ -45,15 +47,12 @@ static void	pipex(const char **const argv, char **const envp,
 
 int	main(const int argc, const char **const argv, char **const envp)
 {
-	int		pipefd[2];
 	int		child_process_cnt;
 	int		exit_status;
 
 	check_args(argc);
 	errno = 0;
-	if (pipe(pipefd) == -1)
-		perror_exit("pipe", EXIT_FAILURE);
-	pipex(argv, envp, pipefd);
+	pipex(argv, envp);
 	child_process_cnt = 2;
 	while (child_process_cnt--)
 		wait(&exit_status);
