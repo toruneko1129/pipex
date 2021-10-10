@@ -51,7 +51,6 @@ int	main(const int argc, const char **const argv, char **const envp)
 	int		exit_status;
 
 	check_args(argc);
-	errno = 0;
 	pipex(argv, envp);
 	child_process_cnt = 2;
 	while (child_process_cnt--)

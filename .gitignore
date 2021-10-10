@@ -4,3 +4,5 @@ pipex
 *.dSYM/*
 infile
 outfile
+hoge
+fuga
