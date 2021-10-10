@@ -65,6 +65,7 @@ void	putbash_perror_exit(const char *const msg, int status);
 void	execve_error_exit(char **cmdarray, char *pathname);
 
 //utils.c
+void	execute_command(const char *const cmd, char **const envp);
 void	free_2darray(char **arr);
 
 #endif
