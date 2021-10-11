@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.j>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 02:09:45 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/10 02:09:47 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/11 22:38:16 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	parent_section(const int *const pipefd,
 void	input_section(const char *const infile, const char *const cmd,
 	char **const envp, const int *const pipefd)
 {
-	const int		infilefd = open(infile, O_RDONLY);
+	const int	infilefd = open(infile, O_RDONLY);
 
 	close(pipefd[READ]);
 	dup2(pipefd[WRITE], STDOUT);
@@ -40,7 +40,7 @@ void	input_section(const char *const infile, const char *const cmd,
 void	output_section(const char *const outfile, const char *const cmd,
 	char **const envp, const int *const pipefd)
 {
-	const int		outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
+	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
 		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
 
 	close(pipefd[READ]);
