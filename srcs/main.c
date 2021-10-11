@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:54:22 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/09/28 02:08:21 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:21:49 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	check_args(const int argc)
 }
 
 static void	pipex(const char **const argv, char **const envp,
-	pid_t	*const child_pid_array)
+	pid_t *const child_pid_array)
 {
 	int		child_process_cnt;
 	int		pipefd[2];
