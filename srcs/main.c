@@ -58,6 +58,6 @@ int	main(const int argc, const char **const argv, char **const envp)
 	pipex(argv, envp, child_pid_array);
 	i = -1;
 	while (++i < 2)
-		printf("%d\n", waitpid(child_pid_array[i], &wstatus, 0));
+		waitpid(child_pid_array[i], &wstatus, 0);
 	exit(WEXITSTATUS(wstatus));
 }
