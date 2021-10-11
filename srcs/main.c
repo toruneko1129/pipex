@@ -57,6 +57,7 @@ int	main(const int argc, const char **const argv, char **const envp)
 	ft_memset(child_pid_array, 0, sizeof(child_pid_array));
 	pipex(argv, envp, child_pid_array);
 	i = -1;
+	wstatus = 0;
 	while (++i < 2)
 		waitpid(child_pid_array[i], &wstatus, 0);
 	exit(WEXITSTATUS(wstatus));
