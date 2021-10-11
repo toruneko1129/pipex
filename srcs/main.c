@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:54:22 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/11 14:21:49 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/11 22:26:54 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	pipex(const char **const argv, char **const envp,
 	child_process_cnt = 0;
 	while (++child_process_cnt <= 2)
 	{
-		errno = 0;
 		if (pipe(pipefd) == -1)
 			perror_exit("pipe", EXIT_FAILURE);
 		current_pid = fork();
