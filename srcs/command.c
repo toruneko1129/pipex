@@ -21,18 +21,19 @@ static char	**get_pathlist_from_envp(char **const envp)
 	i = 0;
 	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5))
 		++i;
-	errno = 0;
 	pathlist = ft_split(envp[i] + 5, ':');
 	return (pathlist);
 }
 
+//return NULL if allocation failed
 static char	*create_cmd_pathname(const char *const cmd,
 	const char *const path)
 {
 	char	*pathname;
 	size_t	dstsize;
 
-	errno = 0;
+	//debug
+	return (NULL);
 	if (path == NULL)
 		return (ft_strdup(""));
 	dstsize = ft_strlen(path) + ft_strlen(cmd) + 2;
@@ -61,7 +62,8 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 	while (1)
 	{
 		pathname = create_cmd_pathname(cmd, pathlist[i]);
-		if (pathlist[i] == NULL || access(pathname, F_OK) == 0)
+		if (pathname == NULL || pathlist[i] == NULL ||
+			access(pathname, F_OK) == 0)
 		{
 			free_2darray(&pathlist);
 			return (pathname);

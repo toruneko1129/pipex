@@ -34,6 +34,11 @@ void	execute_command(const char *const cmd, char **const envp)
 	cmdarray = ft_split(cmd, ' ');
 	if (cmdarray == NULL)
 		perror_exit("ft_split", EXIT_FAILURE);
+	else if (cmdarray[0] == NULL)
+	{
+		free_2darray(&cmdarray);
+		cmdarray = ft_split(cmd, '\0');
+	}
 	pathname = get_cmd_pathname(envp, cmdarray[0]);
 	if (pathname == NULL)
 	{
