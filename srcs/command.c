@@ -63,7 +63,7 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 		pathname = create_cmd_pathname(cmd, pathlist[i]);
 		if (pathlist[i] == NULL || access(pathname, F_OK) == 0)
 		{
-			free_2darray(pathlist);
+			free_2darray(&pathlist);
 			return (pathname);
 		}
 		++i;

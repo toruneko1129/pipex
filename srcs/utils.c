@@ -12,33 +12,34 @@
 
 #include "pipex.h"
 
-void	free_2darray(char **arr)
+void	free_2darray(char ***arr)
 {
 	size_t	i;
 
 	i = 0;
-	while (arr[i] != NULL)
-		free(arr[i++]);
-	free(arr);
+	while ((*arr)[i] != NULL)
+	{
+		free((*arr)[i]);
+		(*arr)[i] = NULL;
+	}
+	free(*arr);
+	*arr = NULL;
 }
 
 void	execute_command(const char *const cmd, char **const envp)
 {
-	char			**cmdarray;
-	char			*pathname;
+	char	**cmdarray;
+	char	*pathname;
 
-	errno = 0;
 	cmdarray = ft_split(cmd, ' ');
 	if (cmdarray == NULL)
 		perror_exit("ft_split", EXIT_FAILURE);
-	errno = 0;
 	pathname = get_cmd_pathname(envp, cmdarray[0]);
 	if (pathname == NULL)
 	{
-		free_2darray(cmdarray);
+		free_2darray(&cmdarray);
 		perror_exit("get_pathname", EXIT_FAILURE);
 	}
-	errno = 0;
 	if (execve(pathname, cmdarray, envp) == -1)
 		execve_error_exit(cmdarray, pathname);
 }

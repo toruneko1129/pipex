@@ -68,6 +68,6 @@ void	execve_error_exit(char **cmdarray, char *pathname);
 
 //utils.c
 void	execute_command(const char *const cmd, char **const envp);
-void	free_2darray(char **arr);
+void	free_2darray(char ***arr);
 
 #endif
