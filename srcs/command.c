@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 01:45:55 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/09 20:06:06 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/12 12:06:19 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	*create_cmd_pathname(const char *const cmd,
 }
 
 //return NULL if allocation failed
+//return empty string if command not found
 char	*get_cmd_pathname(char **const envp, const char *const cmd)
 {
 	char	**pathlist;
@@ -58,8 +59,8 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 	while (1)
 	{
 		pathname = create_cmd_pathname(cmd, pathlist[i]);
-		if (pathname == NULL || pathlist[i] == NULL ||
-			access(pathname, F_OK) == 0)
+		if (pathname == NULL || pathlist[i] == NULL
+			|| access(pathname, F_OK) == 0)
 		{
 			free_2darray(&pathlist);
 			return (pathname);
