@@ -14,7 +14,7 @@
 
 static void	check_args(const int argc)
 {
-	if (argc != 5)
+	if (argc < 5)
 		arg_error_exit();
 }
 
@@ -35,6 +35,7 @@ static void	pipex(const char **const argv, char **const envp,
 			perror_exit("fork", EXIT_FAILURE);
 		else if (current_pid == 0)
 		{
+			errno = 0;
 			if (child_process_cnt == 1)
 				input_section(argv[1], argv[2], envp, pipefd);
 			else
@@ -48,16 +49,20 @@ static void	pipex(const char **const argv, char **const envp,
 
 int	main(const int argc, const char **const argv, char **const envp)
 {
-	pid_t		child_pid_array[2];
+	pid_t		*child_pid_array;
 	int			i;
 	int			wstatus;
 
 	check_args(argc);
-	ft_memset(child_pid_array, 0, sizeof(child_pid_array));
+	child_pid_array = ft_calloc(argc - 2, sizeof(pid_t));
+	if (child_pid_array == NULL)
+		perror_exit("ft_calloc", EXIT_FAILURE);
 	pipex(argv, envp, child_pid_array);
 	i = -1;
 	wstatus = 0;
 	while (++i < 2)
 		waitpid(child_pid_array[i], &wstatus, 0);
+	free(child_pid_array);
+	child_pid_array = NULL;
 	exit(WEXITSTATUS(wstatus));
 }

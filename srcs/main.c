@@ -35,6 +35,7 @@ static void	pipex(const char **const argv, char **const envp,
 			perror_exit("fork", EXIT_FAILURE);
 		else if (current_pid == 0)
 		{
+			errno = 0;
 			if (child_process_cnt == 1)
 				input_section(argv[1], argv[2], envp, pipefd);
 			else
