@@ -12,7 +12,6 @@
 
 #include "pipex.h"
 
-//return NULL if allocation failed
 static char	**get_pathlist_from_envp(char **const envp)
 {
 	char	**pathlist;
@@ -25,7 +24,6 @@ static char	**get_pathlist_from_envp(char **const envp)
 	return (pathlist);
 }
 
-//return NULL if allocation failed
 static char	*create_cmd_pathname(const char *const cmd,
 	const char *const path)
 {
