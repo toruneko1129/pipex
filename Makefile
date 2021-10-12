@@ -11,12 +11,21 @@
 # **************************************************************************** #
 
 NAME	=	pipex
+ifdef WITH_BONUS
+SRCDIR	=	./bnssrcs
+SRCLIST	=	main_bonus.c \
+			command_bonus.c \
+			process_bonus.c \
+			error_bonus.c \
+			utils_bonus.c
+else
 SRCDIR	=	./srcs
 SRCLIST	=	main.c \
 			command.c \
 			process.c \
 			error.c \
 			utils.c
+endif
 SRCS	=	$(addprefix $(SRCDIR)/, $(SRCLIST))
 OBJDIR	=	./objs
 OBJS	=	$(SRCLIST:%.c=$(OBJDIR)/%.o)
@@ -48,4 +57,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus:
+	make WITH_BONUS=1
+
+.PHONY: all clean fclean re bonus
