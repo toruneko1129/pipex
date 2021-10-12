@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   process_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkawakit <hkawakit@student.42tokyo.j>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 02:09:45 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/12 13:15:33 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/12 14:15:39 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	parent_section(const int *const pipefd,
 	pid_t *const child_pid_array, const int child_process_cnt,
