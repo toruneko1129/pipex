@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 18:03:41 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/10 02:33:38 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/12 13:14:37 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	perror_exit(const char *const msg, int status)
 	exit(status);
 }
 
+//need to set errno to 0 before call this function
 void	putbash_perror_exit(const char *const msg, int status,
 	const char *const cmd)
 {

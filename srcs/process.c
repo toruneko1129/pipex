@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.j>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 02:09:45 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/11 22:38:16 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/12 13:15:33 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	input_section(const char *const infile, const char *const cmd,
 	close(pipefd[READ]);
 	dup2(pipefd[WRITE], STDOUT);
 	close(pipefd[WRITE]);
+	errno = 0;
 	if (infilefd == -1)
 		putbash_perror_exit(infile, EXIT_FAILURE, "");
 	dup2(infilefd, STDIN);
@@ -45,6 +46,7 @@ void	output_section(const char *const outfile, const char *const cmd,
 
 	close(pipefd[READ]);
 	close(pipefd[WRITE]);
+	errno = 0;
 	if (outfilefd == -1)
 		putbash_perror_exit(outfile, EXIT_FAILURE, "");
 	dup2(outfilefd, STDOUT);
