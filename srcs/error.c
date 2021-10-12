@@ -25,10 +25,18 @@ void	perror_exit(const char *const msg, int status)
 	exit(status);
 }
 
-void	putbash_perror_exit(const char *const msg, int status)
+void	putbash_perror_exit(const char *const msg, int status,
+	const char *const cmd)
 {
 	ft_putstr_fd(BASH, STDERR);
-	perror_exit(msg, status);
+	if (errno)
+		perror_exit(msg, status);
+	else
+	{
+		ft_putstr_fd((char *)cmd, STDERR);
+		ft_putendl_fd((char *)msg, STDERR);
+		exit(status);
+	}
 }
 
 void	execve_error_exit(char **cmdarray, char *pathname)
@@ -48,7 +56,7 @@ void	execve_error_exit(char **cmdarray, char *pathname)
 	}
 	else
 		perror(pathname);
-	free_2darray(cmdarray);
+	free_2darray(&cmdarray);
 	free(pathname);
 	exit(exit_status);
 }

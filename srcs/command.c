@@ -30,8 +30,6 @@ static char	*create_cmd_pathname(const char *const cmd,
 	char	*pathname;
 	size_t	dstsize;
 
-	//debug
-	return (NULL);
 	if (path == NULL)
 		return (ft_strdup(""));
 	dstsize = ft_strlen(path) + ft_strlen(cmd) + 2;

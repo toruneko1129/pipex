@@ -63,7 +63,8 @@ void	output_section(const char *const outfile, const char *const cmd,
 //error.c
 void	arg_error_exit(void);
 void	perror_exit(const char *const msg, int status);
-void	putbash_perror_exit(const char *const msg, int status);
+void	putbash_perror_exit(const char *const msg, int status,
+			const char *const cmd);
 void	execve_error_exit(char **cmdarray, char *pathname);
 
 //utils.c

@@ -20,7 +20,7 @@ void	free_2darray(char ***arr)
 	while ((*arr)[i] != NULL)
 	{
 		free((*arr)[i]);
-		(*arr)[i] = NULL;
+		(*arr)[i++] = NULL;
 	}
 	free(*arr);
 	*arr = NULL;
@@ -31,13 +31,14 @@ void	execute_command(const char *const cmd, char **const envp)
 	char	**cmdarray;
 	char	*pathname;
 
+	errno = 0;
 	cmdarray = ft_split(cmd, ' ');
 	if (cmdarray == NULL)
 		perror_exit("ft_split", EXIT_FAILURE);
 	else if (cmdarray[0] == NULL)
 	{
 		free_2darray(&cmdarray);
-		cmdarray = ft_split(cmd, '\0');
+		putbash_perror_exit(CMD_NOT_FOUND_MSG, CMD_NOT_FOUND, cmd);
 	}
 	pathname = get_cmd_pathname(envp, cmdarray[0]);
 	if (pathname == NULL)

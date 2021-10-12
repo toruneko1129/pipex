@@ -31,7 +31,7 @@ void	input_section(const char *const infile, const char *const cmd,
 	dup2(pipefd[WRITE], STDOUT);
 	close(pipefd[WRITE]);
 	if (infilefd == -1)
-		putbash_perror_exit(infile, EXIT_FAILURE);
+		putbash_perror_exit(infile, EXIT_FAILURE, "");
 	dup2(infilefd, STDIN);
 	close(infilefd);
 	execute_command(cmd, envp);
@@ -46,7 +46,7 @@ void	output_section(const char *const outfile, const char *const cmd,
 	close(pipefd[READ]);
 	close(pipefd[WRITE]);
 	if (outfilefd == -1)
-		putbash_perror_exit(outfile, EXIT_FAILURE);
+		putbash_perror_exit(outfile, EXIT_FAILURE, "");
 	dup2(outfilefd, STDOUT);
 	close(outfilefd);
 	execute_command(cmd, envp);
