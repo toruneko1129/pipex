@@ -20,6 +20,8 @@ static char	**get_pathlist_from_envp(char **const envp)
 	i = 0;
 	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5))
 		++i;
+	if (envp[i] == NULL)
+		return (ft_split("", '\0'));
 	pathlist = ft_split(envp[i] + 5, ':');
 	return (pathlist);
 }
