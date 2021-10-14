@@ -18,15 +18,25 @@ static void	check_args(const int argc)
 		arg_error_exit();
 }
 
-static void	pipex(const char **const argv, char **const envp,
-	pid_t *const child_pid_array)
+static void	select_process(const int argc, const char **const argv,
+	char **const envp, const int *const pipefd, const int child_process_cnt)
+{
+	errno = 0;
+	if (child_process_cnt == 1)
+		input_section(argv[1], argv[2], envp, pipefd);
+	else
+		output_section(argv[argc - 1], argv[argc - 2], envp, pipefd);
+}
+
+static void	pipex(const int argc, const char **const argv,
+	char **const envp, pid_t *const child_pid_array)
 {
 	int		child_process_cnt;
 	int		pipefd[2];
 	pid_t	current_pid;
 
 	child_process_cnt = 0;
-	while (++child_process_cnt <= 2)
+	while (++child_process_cnt <= argc - 2)
 	{
 		if (pipe(pipefd) == -1)
 			perror_exit("pipe", EXIT_FAILURE);
@@ -34,13 +44,7 @@ static void	pipex(const char **const argv, char **const envp,
 		if (current_pid == -1)
 			perror_exit("fork", EXIT_FAILURE);
 		else if (current_pid == 0)
-		{
-			errno = 0;
-			if (child_process_cnt == 1)
-				input_section(argv[1], argv[2], envp, pipefd);
-			else
-				output_section(argv[4], argv[3], envp, pipefd);
-		}
+			select_process(argc, argv, envp, pipefd, child_process_cnt);
 		else
 			parent_section(pipefd, child_pid_array, child_process_cnt,
 				current_pid);
@@ -52,15 +56,16 @@ int	main(const int argc, const char **const argv, char **const envp)
 	pid_t		*child_pid_array;
 	int			i;
 	int			wstatus;
+	const int	total_process_cnt = argc - 2;
 
 	check_args(argc);
-	child_pid_array = ft_calloc(argc - 2, sizeof(pid_t));
+	child_pid_array = ft_calloc(total_process_cnt, sizeof(pid_t));
 	if (child_pid_array == NULL)
 		perror_exit("ft_calloc", EXIT_FAILURE);
-	pipex(argv, envp, child_pid_array);
+	pipex(argc, argv, envp, child_pid_array);
 	i = -1;
 	wstatus = 0;
-	while (++i < 2)
+	while (++i < total_process_cnt)
 		waitpid(child_pid_array[i], &wstatus, 0);
 	free(child_pid_array);
 	child_pid_array = NULL;
