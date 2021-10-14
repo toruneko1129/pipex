@@ -18,12 +18,14 @@ static void	check_args(const int argc)
 		arg_error_exit();
 }
 
-static void	select_process(const int argc, const char **const argv,
+static void	select_child_process(const int argc, const char **const argv,
 	char **const envp, const int *const pipefd, const int child_process_cnt)
 {
 	errno = 0;
 	if (child_process_cnt == 1)
 		input_section(argv[1], argv[2], envp, pipefd);
+	else if (child_process_cnt < argc - 2)
+		middle_section(argv[child_process_cnt + 1], envp, pipefd);
 	else
 		output_section(argv[argc - 1], argv[argc - 2], envp, pipefd);
 }
@@ -44,7 +46,7 @@ static void	pipex(const int argc, const char **const argv,
 		if (current_pid == -1)
 			perror_exit("fork", EXIT_FAILURE);
 		else if (current_pid == 0)
-			select_process(argc, argv, envp, pipefd, child_process_cnt);
+			select_child_process(argc, argv, envp, pipefd, child_process_cnt);
 		else
 			parent_section(pipefd, child_pid_array, child_process_cnt,
 				current_pid);

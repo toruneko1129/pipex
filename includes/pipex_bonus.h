@@ -57,6 +57,8 @@ void	parent_section(const int *const pipefd,
 			const int current_pid);
 void	input_section(const char *const infile, const char *const cmd,
 			char **const envp, const int *const pipefd);
+void	middle_section(const char *const cmd, char **const envp,
+	const int *const pipefd);
 void	output_section(const char *const outfile, const char *const cmd,
 			char **const envp, const int *const pipefd);
 

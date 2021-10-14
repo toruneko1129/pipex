@@ -17,7 +17,8 @@ void	parent_section(const int *const pipefd,
 	const int current_pid)
 {
 	close(pipefd[WRITE]);
-	dup2(pipefd[READ], STDIN);
+	if (dup2(pipefd[READ], STDIN) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
 	close(pipefd[READ]);
 	child_pid_array[child_process_cnt - 1] = current_pid;
 }
@@ -28,11 +29,13 @@ void	input_section(const char *const infile, const char *const cmd,
 	const int	infilefd = open(infile, O_RDONLY);
 
 	close(pipefd[READ]);
-	dup2(pipefd[WRITE], STDOUT);
+	if (dup2(pipefd[WRITE], STDOUT) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
 	close(pipefd[WRITE]);
 	if (infilefd == -1)
 		putbash_perror_exit(infile, EXIT_FAILURE, "");
-	dup2(infilefd, STDIN);
+	if (dup2(infilefd, STDIN) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
 	close(infilefd);
 	execute_command(cmd, envp);
 }
@@ -47,7 +50,8 @@ void	output_section(const char *const outfile, const char *const cmd,
 	close(pipefd[WRITE]);
 	if (outfilefd == -1)
 		putbash_perror_exit(outfile, EXIT_FAILURE, "");
-	dup2(outfilefd, STDOUT);
+	if (dup2(outfilefd, STDOUT) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
 	close(outfilefd);
 	execute_command(cmd, envp);
 }
