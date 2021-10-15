@@ -20,9 +20,20 @@ static void	check_args(const int argc, const char **const argv)
 		arg_error_exit();
 }
 
-static void	select_child_process(const int argc, const char **const argv,
+static int	get_argv_size(const char **const argv)
+{
+	int		argc;
+
+	argc = 0;
+	while (argv[argc] != NULL)
+		++argc;
+	return (argc);
+}
+
+static void	select_child_process(const char **const argv,
 	char **const envp, const int *const pipefd, const int child_process_cnt)
 {
+	const int		argc = get_argv_size(argv);
 	const t_bool	is_heredoc_mode = is_heredoc(argv[1]);
 
 	errno = 0;
@@ -57,7 +68,7 @@ static void	pipex(const int argc, const char **const argv,
 		if (current_pid == -1)
 			perror_exit("fork", EXIT_FAILURE);
 		else if (current_pid == 0)
-			select_child_process(argc, argv, envp, pipefd, child_process_cnt);
+			select_child_process(argv, envp, pipefd, child_process_cnt);
 		else
 			parent_section(pipefd, child_pid_array, current_pid,
 				is_heredoc_section);
