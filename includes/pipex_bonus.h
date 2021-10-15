@@ -79,8 +79,9 @@ void	execve_error_exit(char **cmdarray, char *pathname);
 //utils.c
 t_bool	is_heredoc(const char *const str);
 void	free_2darray(char ***arr);
-void	parent_section(const int *const pipefd, pid_t *const child_pid,
-			const pid_t current_pid);
+void	parent_section(const int *const pipefd,
+			pid_t *const child_pid_array, const pid_t current_pid,
+			const t_bool is_heredoc_section);
 void	execute_command(const char *const cmd, char **const envp);
 
 #endif

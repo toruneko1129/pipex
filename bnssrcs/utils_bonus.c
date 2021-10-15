@@ -33,14 +33,20 @@ void	free_2darray(char ***arr)
 	*arr = NULL;
 }
 
-void	parent_section(const int *const pipefd, pid_t *const child_pid,
-	const pid_t current_pid)
+void	parent_section(const int *const pipefd,
+	pid_t *const child_pid_array, const pid_t current_pid,
+	const t_bool is_heredoc_section)
 {
+	static int	i = 0;
+
 	close(pipefd[WRITE]);
 	if (dup2(pipefd[READ], STDIN) == -1)
 		perror_exit("dup2", EXIT_FAILURE);
 	close(pipefd[READ]);
-	*child_pid = current_pid;
+	if (is_heredoc_section)
+		waitpid(current_pid, NULL, 0);
+	else
+		child_pid_array[i++] = current_pid;
 }
 
 void	execute_command(const char *const cmd, char **const envp)

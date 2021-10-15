@@ -20,8 +20,9 @@ void	heredoc_section(const char *const limiter, const int *const pipefd)
 	close(pipefd[READ]);
 	while (1)
 	{
+		ft_putstr_fd("> ", STDOUT);
 		line = get_next_line(STDIN);
-		if (line == NULL || !ft_strncmp(line, limiter, limiter_len + 1))
+		if (line == NULL || ft_strncmp(line, limiter, limiter_len + 1) == '\n')
 			break ;
 		ft_putstr_fd(line, pipefd[WRITE]);
 		free(line);
