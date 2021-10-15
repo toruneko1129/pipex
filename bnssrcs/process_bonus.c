@@ -61,8 +61,24 @@ void	middle_section(const char *const cmd, char **const envp,
 	execute_command(cmd, envp);
 }
 
-void	output_section(const char *const outfile, const char *const cmd,
-	char **const envp, const int *const pipefd)
+void	output_append_section(const char *const outfile,
+	const char *const cmd, char **const envp, const int *const pipefd)
+{
+	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_APPEND,
+		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
+
+	close(pipefd[READ]);
+	close(pipefd[WRITE]);
+	if (outfilefd == -1)
+		putbash_perror_exit(outfile, EXIT_FAILURE, "");
+	if (dup2(outfilefd, STDOUT) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
+	close(outfilefd);
+	execute_command(cmd, envp);
+}
+
+void	output_overwrite_section(const char *const outfile,
+	const char *const cmd, char **const envp, const int *const pipefd)
 {
 	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
 		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);

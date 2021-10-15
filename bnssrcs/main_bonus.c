@@ -32,8 +32,10 @@ static void	select_child_process(const int argc, const char **const argv,
 		input_section(argv[1], argv[2], envp, pipefd);
 	else if (child_process_cnt < argc - 3)
 		middle_section(argv[child_process_cnt + 1], envp, pipefd);
+	else if (child_process_cnt == argc - 3 && is_heredoc_mode)
+		output_append_section(argv[argc - 1], argv[argc - 2], envp, pipefd);
 	else
-		output_section(argv[argc - 1], argv[argc - 2], envp, pipefd);
+		output_overwrite_section(argv[argc - 1], argv[argc - 2], envp, pipefd);
 }
 
 static void	pipex(const int argc, const char **const argv,

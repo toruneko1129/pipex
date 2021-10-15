@@ -57,26 +57,28 @@ typedef enum e_boolean
 	TRUE
 }	t_boolean;
 
-//command.c
+//command_bonus.c
 char	*get_cmd_pathname(char **const envp, const char *const cmd);
 
-//process.c
+//process_bonus.c
 void	heredoc_section(const char *const limiter, const int *const pipefd);
 void	input_section(const char *const infile, const char *const cmd,
 			char **const envp, const int *const pipefd);
 void	middle_section(const char *const cmd, char **const envp,
 			const int *const pipefd);
-void	output_section(const char *const outfile, const char *const cmd,
-			char **const envp, const int *const pipefd);
+void	output_append_section(const char *const outfile,
+			const char *const cmd, char **const envp, const int *const pipefd);
+void	output_overwrite_section(const char *const outfile,
+			const char *const cmd, char **const envp, const int *const pipefd);
 
-//error.c
+//error_bonus.c
 void	arg_error_exit(void);
 void	perror_exit(const char *const msg, int status);
 void	putbash_perror_exit(const char *const msg, int status,
 			const char *const cmd);
 void	execve_error_exit(char **cmdarray, char *pathname);
 
-//utils.c
+//utils_bonus.c
 t_bool	is_heredoc(const char *const str);
 void	free_2darray(char ***arr);
 void	parent_section(const int *const pipefd,
