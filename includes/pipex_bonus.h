@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:55:57 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/12 14:14:55 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/15 18:00:44 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_exit_status
 	CMD_NOT_FOUND
 }	t_exit_status;
 
-typedef int t_bool;
+typedef int	t_bool;
 
 typedef enum e_boolean
 {

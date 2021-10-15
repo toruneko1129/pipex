@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.j>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/10 02:09:45 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/12 14:15:39 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/15 18:01:02 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	heredoc_section(const char *const limiter, const int *const pipefd)
 	{
 		line = get_next_line(STDIN);
 		if (line == NULL || !ft_strncmp(line, limiter, limiter_len + 1))
-			break;
+			break ;
 		ft_putstr_fd(line, pipefd[WRITE]);
 		free(line);
 	}
