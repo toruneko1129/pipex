@@ -12,15 +12,25 @@
 
 #include "pipex_bonus.h"
 
-void	parent_section(const int *const pipefd,
-	pid_t *const child_pid_array, const int child_process_cnt,
-	const int current_pid)
+void	heredoc_section(const char *const limiter, const int *const pipefd)
 {
-	close(pipefd[WRITE]);
-	if (dup2(pipefd[READ], STDIN) == -1)
-		perror_exit("dup2", EXIT_FAILURE);
+	const size_t	limiter_len = ft_strlen(limiter);
+	char			*line;
+
 	close(pipefd[READ]);
-	child_pid_array[child_process_cnt - 1] = current_pid;
+	while (1)
+	{
+		line = get_next_line(STDIN);
+		if (line == NULL || !ft_strncmp(line, limiter, limiter_len + 1))
+			break;
+		ft_putstr_fd(line, pipefd[WRITE]);
+		free(line);
+	}
+	if (line != NULL)
+		free(line);
+	line = NULL;
+	close(pipefd[WRITE]);
+	exit(EXIT_SUCCESS);
 }
 
 void	input_section(const char *const infile, const char *const cmd,

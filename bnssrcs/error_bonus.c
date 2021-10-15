@@ -15,7 +15,8 @@
 void	arg_error_exit(void)
 {
 	ft_putendl_fd(ERROR, STDERR);
-	ft_putendl_fd(USAGE, STDERR);
+	ft_putendl_fd(USAGE1, STDERR);
+	ft_putendl_fd(USAGE2, STDERR);
 	exit(EXIT_FAILURE);
 }
 

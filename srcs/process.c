@@ -14,7 +14,7 @@
 
 void	parent_section(const int *const pipefd,
 	pid_t *const child_pid_array, const int child_process_cnt,
-	const int current_pid)
+	const pid_t current_pid)
 {
 	close(pipefd[WRITE]);
 	if (dup2(pipefd[READ], STDIN) == -1)

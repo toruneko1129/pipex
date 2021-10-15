@@ -12,6 +12,13 @@
 
 #include "pipex_bonus.h"
 
+t_bool	is_heredoc(const char *const str)
+{
+	if (str == NULL)
+		return (FALSE);
+	return (ft_strncmp("here_doc", str, 9) == 0);
+}
+
 void	free_2darray(char ***arr)
 {
 	size_t	i;
@@ -24,6 +31,16 @@ void	free_2darray(char ***arr)
 	}
 	free(*arr);
 	*arr = NULL;
+}
+
+void	parent_section(const int *const pipefd, pid_t *const child_pid,
+	const pid_t current_pid)
+{
+	close(pipefd[WRITE]);
+	if (dup2(pipefd[READ], STDIN) == -1)
+		perror_exit("dup2", EXIT_FAILURE);
+	close(pipefd[READ]);
+	*child_pid = current_pid;
 }
 
 void	execute_command(const char *const cmd, char **const envp)

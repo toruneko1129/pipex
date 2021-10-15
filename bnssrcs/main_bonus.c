@@ -12,9 +12,11 @@
 
 #include "pipex_bonus.h"
 
-static void	check_args(const int argc)
+static void	check_args(const int argc, const char **const argv)
 {
-	if (argc < 5)
+	const t_bool	is_heredoc_mode = is_heredoc(argv[1]);
+
+	if (argc < 5 + is_heredoc_mode)
 		arg_error_exit();
 }
 
@@ -48,19 +50,20 @@ static void	pipex(const int argc, const char **const argv,
 		else if (current_pid == 0)
 			select_child_process(argc, argv, envp, pipefd, child_process_cnt);
 		else
-			parent_section(pipefd, child_pid_array, child_process_cnt,
-				current_pid);
+			parent_section(pipefd,
+				&(child_pid_array[child_process_cnt - 1]), current_pid);
 	}
 }
 
 int	main(const int argc, const char **const argv, char **const envp)
 {
-	pid_t		*child_pid_array;
-	int			i;
-	int			wstatus;
-	const int	total_process_cnt = argc - 2;
+	pid_t			*child_pid_array;
+	int				i;
+	int				wstatus;
+	const t_bool	is_heredoc_mode = is_heredoc(argv[1]);
+	const int		total_process_cnt = argc - 2 - is_heredoc_mode;
 
-	check_args(argc);
+	check_args(argc, argv);
 	child_pid_array = ft_calloc(total_process_cnt, sizeof(pid_t));
 	if (child_pid_array == NULL)
 		perror_exit("ft_calloc", EXIT_FAILURE);

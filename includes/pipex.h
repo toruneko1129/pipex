@@ -54,7 +54,7 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd);
 //process.c
 void	parent_section(const int *const pipefd,
 			pid_t *const child_pid_array, const int child_process_cnt,
-			const int current_pid);
+			const pid_t current_pid);
 void	input_section(const char *const infile, const char *const cmd,
 			char **const envp, const int *const pipefd);
 void	output_section(const char *const outfile, const char *const cmd,

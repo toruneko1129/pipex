@@ -25,7 +25,8 @@
 
 //error message
 # define ERROR "Error"
-# define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
+# define USAGE1 "Usage1: ./pipex infile cmd1 ... cmdn outfile"
+# define USAGE2 "Usage2: ./pipex here_doc LIMITER cmd1 ... cmdn outfile"
 # define BASH "bash: "
 # define CMD_NOT_FOUND_MSG ": command not found"
 
@@ -48,17 +49,23 @@ typedef enum e_exit_status
 	CMD_NOT_FOUND
 }	t_exit_status;
 
+typedef int t_bool;
+
+typedef enum e_boolean
+{
+	FALSE,
+	TRUE
+}	t_boolean;
+
 //command.c
 char	*get_cmd_pathname(char **const envp, const char *const cmd);
 
 //process.c
-void	parent_section(const int *const pipefd,
-			pid_t *const child_pid_array, const int child_process_cnt,
-			const int current_pid);
+void	heredoc_section(const char *const limiter, const int *const pipefd);
 void	input_section(const char *const infile, const char *const cmd,
 			char **const envp, const int *const pipefd);
 void	middle_section(const char *const cmd, char **const envp,
-	const int *const pipefd);
+			const int *const pipefd);
 void	output_section(const char *const outfile, const char *const cmd,
 			char **const envp, const int *const pipefd);
 
@@ -70,7 +77,10 @@ void	putbash_perror_exit(const char *const msg, int status,
 void	execve_error_exit(char **cmdarray, char *pathname);
 
 //utils.c
-void	execute_command(const char *const cmd, char **const envp);
+t_bool	is_heredoc(const char *const str);
 void	free_2darray(char ***arr);
+void	parent_section(const int *const pipefd, pid_t *const child_pid,
+			const pid_t current_pid);
+void	execute_command(const char *const cmd, char **const envp);
 
 #endif
