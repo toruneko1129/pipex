@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_bonus.c                                    :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 01:45:55 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/12 14:15:19 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/12 12:06:19 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static char	**get_pathlist_from_envp(char **const envp)
 	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5))
 		++i;
 	if (envp[i] == NULL)
-		return (ft_split("", '\0'));
-	pathlist = ft_split(envp[i] + 5, ':');
+		pathlist = ft_split("", '\0');
+	else
+		pathlist = ft_split(envp[i] + 5, ':');
 	return (pathlist);
 }
 
@@ -52,7 +53,7 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 	char	*pathname;
 	size_t	i;
 
-	if (cmd[0] == '/' && access(cmd, F_OK) == 0)
+	if (ft_strchr(cmd, '/') != NULL)
 		return (ft_strdup(cmd));
 	pathlist = get_pathlist_from_envp(envp);
 	if (pathlist == NULL)

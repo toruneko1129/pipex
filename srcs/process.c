@@ -43,7 +43,7 @@ void	input_section(const char *const infile, const char *const cmd,
 void	output_section(const char *const outfile, const char *const cmd,
 	char **const envp, const int *const pipefd)
 {
-	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
+	const int	outfilefd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
 
 	close(pipefd[READ]);

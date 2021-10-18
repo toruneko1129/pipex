@@ -34,7 +34,7 @@ void	execute_command(const char *const cmd, char **const envp)
 	errno = 0;
 	cmdarray = ft_split(cmd, ' ');
 	if (cmdarray == NULL)
-		perror_exit("ft_split", EXIT_FAILURE);
+		perror_exit("malloc", EXIT_FAILURE);
 	else if (cmdarray[0] == NULL)
 	{
 		free_2darray(&cmdarray);
@@ -44,7 +44,7 @@ void	execute_command(const char *const cmd, char **const envp)
 	if (pathname == NULL)
 	{
 		free_2darray(&cmdarray);
-		perror_exit("get_pathname", EXIT_FAILURE);
+		perror_exit("malloc", EXIT_FAILURE);
 	}
 	if (execve(pathname, cmdarray, envp) == -1)
 		execve_error_exit(cmdarray, pathname);

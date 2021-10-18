@@ -64,7 +64,7 @@ void	middle_section(const char *const cmd, char **const envp,
 void	output_append_section(const char *const outfile,
 	const char *const cmd, char **const envp, const int *const pipefd)
 {
-	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_APPEND,
+	const int	outfilefd = open(outfile, O_WRONLY | O_CREAT | O_APPEND,
 		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
 
 	close(pipefd[READ]);
@@ -80,7 +80,7 @@ void	output_append_section(const char *const outfile,
 void	output_overwrite_section(const char *const outfile,
 	const char *const cmd, char **const envp, const int *const pipefd)
 {
-	const int	outfilefd = open(outfile, O_RDWR | O_CREAT | O_TRUNC,
+	const int	outfilefd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC,
 		S_IREAD | S_IWRITE | S_IROTH | S_IRGRP);
 
 	close(pipefd[READ]);

@@ -86,7 +86,7 @@ int	main(const int argc, const char **const argv, char **const envp)
 	check_args(argc, argv);
 	child_pid_array = ft_calloc(total_process_cnt, sizeof(pid_t));
 	if (child_pid_array == NULL)
-		perror_exit("ft_calloc", EXIT_FAILURE);
+		perror_exit("malloc", EXIT_FAILURE);
 	pipex(argc, argv, envp, child_pid_array);
 	i = -1;
 	wstatus = 0;
