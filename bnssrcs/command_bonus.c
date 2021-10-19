@@ -53,8 +53,10 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 	char	*pathname;
 	size_t	i;
 
-	if (ft_strchr(cmd, '/') != NULL)
+	if (ft_strchr(cmd, '/') != NULL && access(cmd, F_OK) == 0)
 		return (ft_strdup(cmd));
+	if (ft_strchr(cmd, '/') != NULL && access(cmd, F_OK) == -1)
+		return (ft_strdup(""));
 	pathlist = get_pathlist_from_envp(envp);
 	if (pathlist == NULL)
 		return (NULL);
