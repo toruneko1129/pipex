@@ -28,6 +28,7 @@
 # define USAGE "Usage: ./pipex infile cmd1 cmd2 outfile"
 # define BASH "bash: "
 # define CMD_NOT_FOUND_MSG ": command not found"
+# define DOT_ERROR_MSG ".: filename argument required\n.: usage: . filename [arguments]"
 
 typedef enum e_fd
 {
@@ -44,6 +45,7 @@ typedef enum e_pipe
 
 typedef enum e_exit_status
 {
+	DOT_ERROR = 2,
 	PERMISSION_DENIED = 126,
 	CMD_NOT_FOUND
 }	t_exit_status;
