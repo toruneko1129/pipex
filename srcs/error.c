@@ -42,13 +42,19 @@ void	putbash_perror_exit(const char *const msg, int status,
 
 void	execve_error_exit(char **cmdarray, char *pathname)
 {
-	int		exit_status;
+	int			exit_status;
+	const int	dirfd = open(pathname, O_DIRECTORY);
 
 	exit_status = EXIT_FAILURE;
 	if (!pathname[0])
 		exit_status = CMD_NOT_FOUND;
-	else if (access(pathname, X_OK) == -1)
+	else if (dirfd != -1 || access(pathname, X_OK) == -1)
 		exit_status = PERMISSION_DENIED;
+	if (dirfd != -1)
+	{
+		close(dirfd);
+		errno = EISDIR;
+	}
 	ft_putstr_fd(BASH, STDERR);
 	if (exit_status == CMD_NOT_FOUND)
 	{
