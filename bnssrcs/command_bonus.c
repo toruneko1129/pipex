@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_bonus.c                                    :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 01:45:55 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/18 23:15:19 by hkawakit         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:23:03 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ char	*get_cmd_pathname(char **const envp, const char *const cmd)
 	char	*pathname;
 	size_t	i;
 
-	if (ft_strchr(cmd, '/') != NULL && access(cmd, F_OK) == 0)
+	if (ft_strchr(cmd, '/') != NULL || !ft_strncmp(cmd, ".", 2)
+		|| !ft_strncmp(cmd, "..", 3))
 		return (ft_strdup(cmd));
-	if (ft_strchr(cmd, '/') != NULL && access(cmd, F_OK) == -1)
-		return (ft_strdup(""));
 	pathlist = get_pathlist_from_envp(envp);
 	if (pathlist == NULL)
 		return (NULL);
