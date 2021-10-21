@@ -40,11 +40,9 @@ void	putbash_perror_exit(const char *const msg, int status,
 	}
 }
 
-//need to set errno to 0 before call this function
-void	execve_error_exit(char **cmdarray, char *pathname)
+static int	get_exit_status(char *pathname, const int dirfd)
 {
 	int			exit_status;
-	const int	dirfd = open(pathname, O_DIRECTORY);
 
 	exit_status = EXIT_FAILURE;
 	if (!ft_strncmp(pathname, ".", 2))
@@ -56,6 +54,15 @@ void	execve_error_exit(char **cmdarray, char *pathname)
 		exit_status = PERMISSION_DENIED;
 	if (errno == ENOTDIR)
 		exit_status = PERMISSION_DENIED;
+	return (exit_status);
+}
+
+//need to set errno to 0 before call this function
+void	execve_error_exit(char **cmdarray, char *pathname)
+{
+	const int	dirfd = open(pathname, O_DIRECTORY);
+	const int	exit_status = get_exit_status(pathname, dirfd);
+
 	if (dirfd != -1)
 	{
 		close(dirfd);
