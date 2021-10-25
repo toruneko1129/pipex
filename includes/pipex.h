@@ -51,6 +51,14 @@ typedef enum e_exit_status
 	CMD_NOT_FOUND
 }	t_exit_status;
 
+typedef int	t_bool;
+
+typedef enum e_boolean
+{
+	FALSE,
+	TRUE
+}	t_boolean;
+
 //command.c
 char	*get_cmd_pathname(char **const envp, const char *const cmd);
 
@@ -68,7 +76,8 @@ void	arg_error_exit(void);
 void	perror_exit(const char *const msg, int status);
 void	putbash_perror_exit(const char *const msg, int status,
 			const char *const cmd);
-void	execve_error_exit(char **cmdarray, char *pathname);
+void	execve_error_exit(char **cmdarray, char *pathname,
+			const t_bool no_pathlist);
 
 //utils.c
 void	execute_command(const char *const cmd, char **const envp);

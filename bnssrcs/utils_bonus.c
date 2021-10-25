@@ -12,6 +12,16 @@
 
 #include "pipex_bonus.h"
 
+static t_bool	exist_pathlist(char **const envp)
+{
+	size_t	i;
+
+	i = 0;
+	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5))
+		++i;
+	return (envp[i] == NULL);
+}
+
 t_bool	is_heredoc(const char *const str)
 {
 	if (str == NULL)
@@ -51,8 +61,9 @@ void	parent_section(const int *const pipefd,
 
 void	execute_command(const char *const cmd, char **const envp)
 {
-	char	**cmdarray;
-	char	*pathname;
+	char			**cmdarray;
+	char			*pathname;
+	const t_bool	no_pathlist = exist_pathlist(envp);
 
 	errno = 0;
 	cmdarray = ft_split(cmd, ' ');
@@ -70,5 +81,5 @@ void	execute_command(const char *const cmd, char **const envp)
 		perror_exit("malloc", EXIT_FAILURE);
 	}
 	if (execve(pathname, cmdarray, envp) == -1)
-		execve_error_exit(cmdarray, pathname);
+		execve_error_exit(cmdarray, pathname, no_pathlist);
 }

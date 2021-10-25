@@ -59,7 +59,8 @@ static int	get_exit_status(char *pathname, const int dirfd)
 }
 
 //need to set errno to 0 before call this function
-void	execve_error_exit(char **cmdarray, char *pathname)
+void	execve_error_exit(char **cmdarray, char *pathname,
+	const t_bool no_pathlist)
 {
 	const int	dirfd = open(pathname, O_DIRECTORY);
 	const int	exit_status = get_exit_status(pathname, dirfd);
@@ -77,6 +78,8 @@ void	execve_error_exit(char **cmdarray, char *pathname)
 		ft_putstr_fd(cmdarray[0], STDERR);
 		ft_putendl_fd(CMD_NOT_FOUND_MSG, STDERR);
 	}
+	else if (no_pathlist && ft_strchr(cmdarray[0], '/') == NULL)
+		perror(cmdarray[0]);
 	else
 		perror(pathname);
 	free_2darray(&cmdarray);
