@@ -6,7 +6,7 @@
 #    By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/24 17:06:15 by hkawakit          #+#    #+#              #
-#    Updated: 2021/09/28 01:46:14 by hkawakit         ###   ########.fr        #
+#    Updated: 2022/05/22 00:21:35 by hkawakit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCLIST	=	main_bonus.c \
 			command_bonus.c \
 			process_bonus.c \
 			error_bonus.c \
+			pipex_split_bonus.c \
 			utils_bonus.c
 else
 SRCDIR	=	./srcs

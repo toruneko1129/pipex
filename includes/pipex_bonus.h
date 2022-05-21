@@ -6,7 +6,7 @@
 /*   By: hkawakit <hkawakit@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/24 16:55:57 by hkawakit          #+#    #+#             */
-/*   Updated: 2021/10/15 18:00:44 by hkawakit         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:20:43 by hkawakit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ void	putbash_perror_exit(const char *const msg, int status,
 			const char *const cmd);
 void	execve_error_exit(char **cmdarray, char *pathname,
 			const t_bool no_pathlist);
+
+//pipex_split_bonus.c
+char	**pipex_split(char const *s);
 
 //utils_bonus.c
 t_bool	is_heredoc(const char *const str);
