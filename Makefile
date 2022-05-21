@@ -24,6 +24,7 @@ SRCLIST	=	main.c \
 			command.c \
 			process.c \
 			error.c \
+			pipex_split.c \
 			utils.c
 endif
 SRCS	=	$(addprefix $(SRCDIR)/, $(SRCLIST))

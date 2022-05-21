@@ -79,6 +79,9 @@ void	putbash_perror_exit(const char *const msg, int status,
 void	execve_error_exit(char **cmdarray, char *pathname,
 			const t_bool no_pathlist);
 
+//pipex_split.c
+char	**pipex_split(char const *s);
+
 //utils.c
 void	execute_command(const char *const cmd, char **const envp);
 void	free_2darray(char ***arr);
